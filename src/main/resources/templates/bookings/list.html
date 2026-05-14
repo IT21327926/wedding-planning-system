@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings - Forever Events</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #fff9f9;
+        }
+        .navbar {
+            background-color: rgba(255,255,255,0.95) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            color: #c8a97e !important;
+            font-size: 1.5rem;
+        }
+        .nav-link {
+            color: #555 !important;
+            font-weight: 500;
+        }
+        .nav-link:hover { color: #c8a97e !important; }
+        .page-header {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+            url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600') center/cover no-repeat;
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            margin-top: 56px;
+        }
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+        }
+        .section-divider {
+            width: 60px;
+            height: 3px;
+            background: #c8a97e;
+            margin: 10px auto 0;
+        }
+        .btn-wedding {
+            background-color: #c8a97e;
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+        .btn-wedding:hover {
+            background-color: #b8956a;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(200,169,126,0.4);
+        }
+        .booking-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            border: 1px solid #f0e6d6;
+            transition: all 0.3s;
+        }
+        .booking-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(200,169,126,0.2);
+        }
+        .booking-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .booking-info {
+            color: #777;
+            font-size: 0.9rem;
+            margin: 3px 0;
+        }
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .status-confirmed {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+        .vendor-badge {
+            background-color: #f0e6d6;
+            color: #c8a97e;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .btn-delete {
+            background-color: #ffe8e8;
+            color: #e74c3c;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-delete:hover {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 0;
+            color: #aaa;
+        }
+        .empty-state i {
+            font-size: 4rem;
+            color: #e0d5c5;
+            margin-bottom: 20px;
+        }
+        .footer {
+            background-color: #2c2c2c;
+            color: #aaa;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+        .footer span { color: #c8a97e; }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">💍 Forever Events</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/vendors">Vendors</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/bookings">Bookings</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-wedding ms-2 text-white px-3" href="/register">Register</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Header -->
+<div class="page-header">
+    <h1>My Bookings</h1>
+    <div class="section-divider"></div>
+    <p class="mt-3" style="letter-spacing: 2px; opacity: 0.9;">✦ MANAGE YOUR WEDDING BOOKINGS ✦</p>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5 class="text-muted">All Bookings (<span th:text="${#lists.size(bookings)}"></span>)</h5>
+        <a href="/bookings/new" class="btn btn-wedding">
+            <i class="fas fa-plus me-2"></i>New Booking
+        </a>
+    </div>
+
+    <!-- Empty State -->
+    <div th:if="${#lists.isEmpty(bookings)}" class="empty-state">
+        <i class="fas fa-calendar-times"></i>
+        <h4>No bookings yet</h4>
+        <p>Start by creating your first wedding booking!</p>
+        <a href="/bookings/new" class="btn btn-wedding mt-3">Create First Booking</a>
+    </div>
+
+    <!-- Booking Cards -->
+    <div th:unless="${#lists.isEmpty(bookings)}">
+        <div class="booking-card" th:each="booking : ${bookings}">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h5 class="booking-title" th:text="${booking.clientName}"></h5>
+                    <span class="vendor-badge me-2">
+                        <i class="fas fa-store me-1"></i>
+                        <span th:text="${booking.vendor.name}"></span>
+                        (<span th:text="${booking.vendor.vendorType}"></span>)
+                    </span>
+                    <span class="status-badge"
+                          th:classappend="${booking.status == 'Confirmed'} ? 'status-confirmed' : 'status-pending'"
+                          th:text="${booking.status}"></span>
+                </div>
+                <a th:href="@{/bookings/delete/{id}(id=${booking.id})}"
+                   class="btn btn-delete"
+                   onclick="return confirm('Are you sure you want to delete this booking?')">
+                    <i class="fas fa-trash me-1"></i>Delete
+                </a>
+            </div>
+            <hr style="border-color: #f0e6d6;">
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="booking-info">
+                        <i class="fas fa-envelope me-2" style="color:#c8a97e;"></i>
+                        <span th:text="${booking.clientEmail}"></span>
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p class="booking-info">
+                        <i class="fas fa-phone me-2" style="color:#c8a97e;"></i>
+                        <span th:text="${booking.clientPhone}"></span>
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p class="booking-info">
+                        <i class="fas fa-calendar me-2" style="color:#c8a97e;"></i>
+                        <span th:text="${booking.eventDate}"></span>
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p class="booking-info">
+                        <i class="fas fa-map-marker-alt me-2" style="color:#c8a97e;"></i>
+                        <span th:text="${booking.eventVenue}"></span>
+                    </p>
+                </div>
+            </div>
+            <p class="booking-info" th:if="${booking.notes != null && !booking.notes.isEmpty()}">
+                <i class="fas fa-sticky-note me-2" style="color:#c8a97e;"></i>
+                <span th:text="${booking.notes}"></span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>© 2026 <span>Forever Events</span> — Wedding Planning System | SE1020 Assignment</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
