@@ -49,4 +49,11 @@ public class BookingController {
         bookingService.deleteBooking(id);
         return "redirect:/bookings";
     }
+    @GetMapping("/confirm/{id}")
+    public String confirmBooking(@PathVariable Long id) {
+        Booking booking = bookingService.getBookingById(id).orElseThrow();
+        booking.setStatus("Confirmed");
+        bookingService.updateBooking(booking);
+        return "redirect:/bookings";
+    }
 }
