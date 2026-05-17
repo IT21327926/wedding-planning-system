@@ -143,8 +143,27 @@
                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/vendors">Vendors</a></li>
                 <li class="nav-item"><a class="nav-link" href="/bookings">Bookings</a></li>
-                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-                <li class="nav-item"><a class="nav-link btn btn-wedding ms-2 text-white" href="/register">Register</a></li>
+
+                <!-- Show when NOT logged in -->
+                <th:block th:if="${loggedInUser == null}">
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-wedding ms-2 text-white" href="/register">Register</a>
+                    </li>
+                </th:block>
+
+                <!-- Show when logged in -->
+                <th:block th:if="${loggedInUser != null}">
+                    <li class="nav-item">
+            <span class="nav-link text-muted">
+                <i class="fas fa-user-circle me-1" style="color:#c8a97e;"></i>
+                <span th:text="${loggedInUser.name}"></span>
+            </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-wedding ms-2 text-white" href="/logout">Logout</a>
+                    </li>
+                </th:block>
             </ul>
         </div>
     </div>
