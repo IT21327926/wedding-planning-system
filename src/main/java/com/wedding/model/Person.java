@@ -1,11 +1,20 @@
 package com.wedding.model;
 
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.*;
 
 @MappedSuperclass
 public abstract class Person {
+
+    @NotBlank(message = "Name is required")
     private String name;
+
+    @NotBlank(message = "Email is required")
+    @Email(message = "Please enter a valid email address")
     private String email;
+
+    @NotBlank(message = "Phone number is required")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits")
     private String phone;
 
     public Person() {}

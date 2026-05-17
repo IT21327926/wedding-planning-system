@@ -192,14 +192,18 @@
                 <label class="form-label"><i class="fas fa-user me-2" style="color:#c8a97e;"></i>Vendor Name</label>
                 <div class="input-icon">
                     <i class="fas fa-user"></i>
-                    <input type="text" class="form-control" th:field="*{name}" placeholder="Enter vendor name" required/>
+                    <input type="text" class="form-control" th:field="*{name}"
+                           th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
+                           placeholder="Enter vendor name"/>
                 </div>
+                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><i class="fas fa-tag me-2" style="color:#c8a97e;"></i>Vendor Type</label>
                 <div class="input-icon">
                     <i class="fas fa-tag"></i>
-                    <select class="form-select" th:field="*{vendorType}" required>
+                    <select class="form-select" th:field="*{vendorType}"
+                            th:classappend="${#fields.hasErrors('vendorType')} ? 'is-invalid'">
                         <option value="">-- Select Vendor Type --</option>
                         <option value="Photographer">📷 Photographer</option>
                         <option value="Caterer">🍽️ Caterer</option>
@@ -211,35 +215,47 @@
                         <option value="Wedding Cake">🎂 Wedding Cake</option>
                     </select>
                 </div>
+                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('vendorType')}" th:errors="*{vendorType}"></div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><i class="fas fa-envelope me-2" style="color:#c8a97e;"></i>Email Address</label>
                 <div class="input-icon">
                     <i class="fas fa-envelope"></i>
-                    <input type="email" class="form-control" th:field="*{email}" placeholder="Enter email address" required/>
+                    <input type="email" class="form-control" th:field="*{email}"
+                           th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
+                           placeholder="Enter email address"/>
                 </div>
+                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><i class="fas fa-phone me-2" style="color:#c8a97e;"></i>Phone Number</label>
                 <div class="input-icon">
                     <i class="fas fa-phone"></i>
-                    <input type="text" class="form-control" th:field="*{phone}" placeholder="Enter phone number" required/>
+                    <input type="text" class="form-control" th:field="*{phone}"
+                           th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'"
+                           placeholder="Enter phone number"
+                           maxlength="10"/>
                 </div>
+                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><i class="fas fa-align-left me-2" style="color:#c8a97e;"></i>Description</label>
-                <textarea class="form-control" th:field="*{description}" rows="3" placeholder="Describe the vendor services..."></textarea>
+                <textarea class="form-control" th:field="*{description}" rows="3"
+                          placeholder="Describe the vendor services..."></textarea>
             </div>
             <div class="mb-4">
                 <label class="form-label"><i class="fas fa-money-bill me-2" style="color:#c8a97e;"></i>Price (LKR)</label>
                 <div class="input-icon">
                     <i class="fas fa-money-bill"></i>
-                    <input type="number" class="form-control" th:field="*{price}" placeholder="Enter price in LKR" required/>
+                    <input type="number" class="form-control" th:field="*{price}"
+                           th:classappend="${#fields.hasErrors('price')} ? 'is-invalid'"
+                           placeholder="Enter price in LKR"/>
                 </div>
+                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
             </div>
             <div class="d-flex gap-3 justify-content-center">
                 <button type="submit" class="btn btn-wedding">
-                    <i class="fas fa-save me-2"></i>Save Vendor
+                    <i class="fas fa-save me-2"></i>Update Vendor
                 </button>
                 <a href="/vendors" class="btn btn-cancel">
                     <i class="fas fa-times me-2"></i>Cancel
@@ -248,7 +264,6 @@
         </form>
     </div>
 </div>
-
 <!-- Footer -->
 <footer class="footer">
     <p>© 2026 <span>Forever Events</span> — Wedding Planning System | SE1020 Assignment</p>
